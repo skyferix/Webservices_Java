@@ -39,7 +39,6 @@ public class Person extends User {
     }
 
     public void update(Person person){
-        if(person.getId()!=0){this.setId(person.getId());}
         if(person.getLogin()!=null){this.setLogin(person.getLogin());}
         if(person.getPassword()!=null){this.setPassword(person.getPassword());}
         if(person.getName()!=null) {this.name = person.getName();}

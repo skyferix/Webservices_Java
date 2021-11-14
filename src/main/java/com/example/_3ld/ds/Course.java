@@ -13,6 +13,14 @@ public class Course extends Hib {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public void update(Course course){
+        if(course.getTitle()!=null) {this.title = course.getTitle();}
+        if(course.getDescription()!=null) {this.description = course.getDescription();}
+        if(course.getCreatedDate()!=null) {this.createdDate = course.getCreatedDate();}
+        if(course.getStartDate()!=null) {this.startDate = course.getStartDate();}
+        if(course.getEndDate()!=null) {this.endDate = course.getEndDate();}
+    }
+
     @ManyToOne
     @JoinColumn(name="owner_id", referencedColumnName = "id")
     private Person owner;

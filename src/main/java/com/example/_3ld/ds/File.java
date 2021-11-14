@@ -3,16 +3,18 @@ package com.example._3ld.ds;
 import javax.persistence.*;
 
 @Entity
-public class File {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class File extends Hib{
     private String name;
     private String path;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="folder_id", referencedColumnName = "id")
     private Folder folder;
+
+    public void update(File file){
+        if(file.getName()!=null) {this.name = file.getName();}
+        if(file.getPath()!=null) {this.path = file.getPath();}
+    }
 
     public File() {
     }
@@ -22,14 +24,6 @@ public class File {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

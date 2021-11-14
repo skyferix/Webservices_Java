@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Folder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Folder extends Hib {
     private String title;
 
     @ManyToOne
@@ -35,6 +32,15 @@ public class Folder {
     public Folder() {
     }
 
+    public void update(Folder folder){
+        if(folder.getTitle()!=null) {this.title = folder.getTitle();}
+        if(folder.getParentCourse()!=null) {this.parentCourse = folder.getParentCourse();}
+        if(folder.getSubFolders()!=null) {this.subFolders = folder.getSubFolders();}
+        if(folder.getParentFolder()!=null) {this.parentFolder = folder.getParentFolder();}
+        if(folder.getFolderFiles()!=null) {this.folderFiles = folder.getFolderFiles();}
+        if(folder.getModerators()!=null) {this.moderators = folder.getModerators();}
+    }
+
     public List<User> getModerators() {
         return moderators;
     }
@@ -45,14 +51,6 @@ public class Folder {
 
     public Folder(String title) {
         this.title = title;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {

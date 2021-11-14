@@ -13,7 +13,6 @@ public class Company extends User {
         this.representative = representative;
     }
     public void update(Company company){
-        if(company.getId()!=0){this.setId(company.getId());}
         if(company.getLogin()!=null){this.setLogin(company.getLogin());}
         if(company.getPassword()!=null){this.setPassword(company.getPassword());}
         if(company.getCompanyName()!=null) {this.companyName = company.getCompanyName();}

@@ -1,15 +1,18 @@
 package com.example._3ld.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @RestController
 public class WebController {
+    @Autowired
+    private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    @GetMapping(value="")
-    @ResponseBody
+    @RequestMapping(value = "")
+
     public String sayHello(){
-        return "Welcome to main controller";
+        return requestMappingHandlerMapping.getHandlerMethods().keySet().toString();
     }
 }

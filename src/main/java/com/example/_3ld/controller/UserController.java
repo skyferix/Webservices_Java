@@ -26,20 +26,24 @@ public class UserController {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @RequestMapping(value="")
+    String index(){
+        return "User controller";
+    }
+
     @GetMapping(value="/{id}")
-    @ResponseBody
     Optional<User> get(@PathVariable Integer id){
         return userRepository.findById(id);
     }
 
-    @DeleteMapping(value="/delete/{id}")
+    @DeleteMapping(value="/{id}")
     @ResponseBody
     String delete(@PathVariable Integer id){
         userRepository.deleteById(id);
         return "Success";
     }
 
-    @PutMapping(value="/update/{id}")
+    @PutMapping(value="/{id}")
     @ResponseBody
     User update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
         Optional<User> tempUser = userRepository.findById(id);

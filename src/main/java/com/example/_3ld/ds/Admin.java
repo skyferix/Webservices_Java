@@ -21,7 +21,6 @@ public class Admin extends User{
     }
 
     public void update(Admin admin){
-        if(admin.getId()!=0){this.setId(admin.getId());}
         if(admin.getLogin()!=null){this.setLogin(admin.getLogin());}
         if(admin.getPassword()!=null){this.setPassword(admin.getPassword());}
         if(admin.getName()!=null) {this.name = admin.getName();}
