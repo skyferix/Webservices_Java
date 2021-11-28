@@ -44,6 +44,7 @@ public class UserController {
         for(Course course: courses){
             CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
             courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseDTO.setParticipants(course.getParticipants());
             courseList.add(courseDTO);
         }
         return courseList;
@@ -58,6 +59,7 @@ public class UserController {
         for(Course course: courses){
             CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
             courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseDTO.setParticipants(course.getParticipants());
             courseList.add(courseDTO);
         }
 
@@ -73,6 +75,7 @@ public class UserController {
         for(Course course: courses){
             CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
             courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseDTO.setParticipants(course.getParticipants());
             courseList.add(courseDTO);
         }
 

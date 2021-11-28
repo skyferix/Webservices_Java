@@ -21,11 +21,6 @@ public class Course extends Hib {
         if(course.getEndDate()!=null) {this.endDate = course.getEndDate();}
     }
 
-    @ManyToOne
-    @JoinColumn(name="owner_id", referencedColumnName = "id")
-    private Person owner;
-
-
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name="course_moderator",
@@ -41,6 +36,10 @@ public class Course extends Hib {
     @OneToMany(mappedBy = "parentCourse",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @OrderBy("id ASC")
     private List<Folder> courseFolders;
+
+    @ManyToOne
+    @JoinColumn(name="owner_id", referencedColumnName = "id")
+    private Person owner;
 
     public Course(String title, String description, LocalDate createdDate, LocalDate startDate, LocalDate endDate) {
         this.title = title;

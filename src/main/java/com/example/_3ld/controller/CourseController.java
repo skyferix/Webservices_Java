@@ -35,8 +35,14 @@ public class CourseController {
 
     @GetMapping(value="/{id}")
     @ResponseBody
-    Optional<Course> get(@PathVariable Integer id){
-        return courseRepository.findById(id);
+    Course get(@PathVariable Integer id){
+        ModelMapper modelMapper = new ModelMapper();
+        Course course = courseRepository.findById(id).get();
+        CourseDTO courseDTO = modelMapper.map(course, CourseDTO.class);
+        courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+        courseDTO.setParticipants(course.getParticipants());
+        System.out.println(course.getParticipants());
+        return course;
     }
 
     @GetMapping(value="/all")
@@ -47,6 +53,7 @@ public class CourseController {
         for(Course course: courses){
             CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
             courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseDTO.setParticipants(course.getParticipants());
             courseList.add(courseDTO);
         }
 

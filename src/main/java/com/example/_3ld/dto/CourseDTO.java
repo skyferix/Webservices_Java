@@ -1,8 +1,11 @@
 package com.example._3ld.dto;
 
 import com.example._3ld.ds.Course;
+import com.example._3ld.ds.Person;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourseDTO {
 
@@ -13,6 +16,19 @@ public class CourseDTO {
     private LocalDate startDate;
     private LocalDate endDate;
     private String owner;
+    private List<Integer> participants;
+
+    public List<Integer> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Person> participants) {
+        List<Integer> ids = new ArrayList<>();
+        for(Person person: participants){
+            ids.add(person.getId());
+        }
+        this.participants = ids;
+    }
 
     public String getOwner() {
         return owner;
