@@ -2,14 +2,18 @@ package com.example._3ld.controller;
 
 import com.example._3ld.Repositories.*;
 import com.example._3ld.ds.*;
+import com.example._3ld.dto.CourseDTO;
 import com.example._3ld.jsonparsing.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,6 +37,20 @@ public class CourseController {
     @ResponseBody
     Optional<Course> get(@PathVariable Integer id){
         return courseRepository.findById(id);
+    }
+
+    @GetMapping(value="/all")
+    List<CourseDTO> getAll(){
+        List<Course> courses = courseRepository.findAll();
+        List<CourseDTO> courseList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for(Course course: courses){
+            CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
+            courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseList.add(courseDTO);
+        }
+
+        return courseList;
     }
 
     @DeleteMapping(value="/{id}")

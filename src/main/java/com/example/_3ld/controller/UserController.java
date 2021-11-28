@@ -5,12 +5,16 @@ import com.example._3ld.Repositories.CompanyRepository;
 import com.example._3ld.Repositories.PersonRepository;
 import com.example._3ld.Repositories.UserRepository;
 import com.example._3ld.ds.*;
+import com.example._3ld.dto.CourseDTO;
 import com.example._3ld.jsonparsing.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,6 +33,62 @@ public class UserController {
     @RequestMapping(value="")
     String index(){
         return "User controller";
+    }
+
+    @GetMapping(value="/own/{id}")
+    List<CourseDTO> getOwn(@PathVariable Integer id){
+        Person person = (Person) userRepository.findById(id).get();
+        List<Course> courses = person.getOwnedCourses();
+        List<CourseDTO> courseList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for(Course course: courses){
+            CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
+            courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseList.add(courseDTO);
+        }
+        return courseList;
+    }
+
+    @GetMapping(value="/moderate/{id}")
+    List<CourseDTO> getModerate(@PathVariable Integer id){
+        Person person = (Person) userRepository.findById(id).get();
+        List<Course> courses = person.getModeratedCourses();
+        List<CourseDTO> courseList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for(Course course: courses){
+            CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
+            courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseList.add(courseDTO);
+        }
+
+        return courseList;
+    }
+
+    @GetMapping(value="/participate/{id}")
+    List<CourseDTO> getParticipate(@PathVariable Integer id){
+        Person person = (Person) userRepository.findById(id).get();
+        List<Course> courses = person.getEnrolledCourses();
+        List<CourseDTO> courseList = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for(Course course: courses){
+            CourseDTO courseDTO = modelMapper.map(course,CourseDTO.class);
+            courseDTO.setOwner(course.getOwner().getName() + ' ' + course.getOwner().getSurname());
+            courseList.add(courseDTO);
+        }
+
+        return courseList;
+    }
+
+    @PostMapping(value = "/login")
+    String login(@RequestBody String userCredentials){
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = Json.parse(userCredentials);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        User user = userRepository.findByLoginAndPassword(jsonNode.get("login").asText(),jsonNode.get("password").asText());
+        return Integer.toString(user.getId());
     }
 
     @GetMapping(value="/{id}")
@@ -70,6 +130,7 @@ public class UserController {
         }
         return null;
     }
+
     @PostMapping(value="/create")
     @ResponseBody
     User create(@RequestBody String personData) throws JsonProcessingException {
