@@ -12,22 +12,16 @@ public class Company extends User {
         this.companyName = companyName;
         this.representative = representative;
     }
-    public void update(Company company){
-        if(company.getLogin()!=null){this.setLogin(company.getLogin());}
-        if(company.getPassword()!=null){this.setPassword(company.getPassword());}
-        if(company.getCompanyName()!=null) {this.companyName = company.getCompanyName();}
-        if(company.getRepresentative()!=null) {this.representative = company.getRepresentative();}
-    }
 
     public Company() {
 
     }
 
-    public String getCompanyName() {
+    public String getName() {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
+    public void setName(String companyName) {
         this.companyName = companyName;
     }
 

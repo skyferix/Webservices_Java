@@ -67,18 +67,18 @@ public class CourseController {
         return "Success";
     }
 
-    @PutMapping(value="/{id}")
-    @ResponseBody
-    Course update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
-        Optional<Course> tempCourse = courseRepository.findById(id);
-        Course currentCourse = tempCourse.get();
-        JsonNode jsonNode = Json.parse(personData);
-
-        Course course = Json.fromJson(jsonNode, Course.class);
-        currentCourse.update(course);
-        return courseRepository.save(currentCourse);
-
-    }
+//    @PutMapping(value="/{id}")
+//    @ResponseBody
+//    Course update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
+//        Optional<Course> tempCourse = courseRepository.findById(id);
+//        Course currentCourse = tempCourse.get();
+//        JsonNode jsonNode = Json.parse(personData);
+//
+//        Course course = Json.fromJson(jsonNode, Course.class);
+//        currentCourse.update(course);
+//        return courseRepository.save(currentCourse);
+//
+//    }
     @PostMapping(value="/create")
     @ResponseBody
     Course create(@RequestBody String personData) throws JsonProcessingException {

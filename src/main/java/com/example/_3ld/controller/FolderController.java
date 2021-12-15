@@ -35,18 +35,18 @@ public class FolderController {
         return "Success";
     }
 
-    @PutMapping(value="/{id}")
-    @ResponseBody
-    Folder update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
-        Optional<Folder> tempFolder = folderRepository.findById(id);
-        Folder currentFolder = tempFolder.get();
-        JsonNode jsonNode = Json.parse(personData);
-
-        Folder folder = Json.fromJson(jsonNode, Folder.class);
-        currentFolder.update(folder);
-        return folderRepository.save(currentFolder);
-
-    }
+//    @PutMapping(value="/{id}")
+//    @ResponseBody
+//    Folder update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
+//        Optional<Folder> tempFolder = folderRepository.findById(id);
+//        Folder currentFolder = tempFolder.get();
+//        JsonNode jsonNode = Json.parse(personData);
+//
+//        Folder folder = Json.fromJson(jsonNode, Folder.class);
+//        currentFolder.update(folder);
+//        return folderRepository.save(currentFolder);
+//
+//    }
     @PostMapping(value="/create")
     @ResponseBody
     Folder create(@RequestBody String personData) throws JsonProcessingException {

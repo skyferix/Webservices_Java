@@ -8,8 +8,7 @@ import java.util.List;
 public class Folder extends Hib {
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name="parent_course_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "mainFolder")
     private Course parentCourse;
 
     @OneToMany(mappedBy = "parentFolder",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -23,22 +22,31 @@ public class Folder extends Hib {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="folder_id")
     @OrderBy("id ASC")
-    private List<File> folderFiles;
+    private List<File> files;
 
     @ManyToMany(mappedBy = "folders", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @OrderBy("id ASC")
     private List<User> moderators = new ArrayList<>();
 
+    private String description;
+
+    private String path;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public Folder() {
     }
 
-    public void update(Folder folder){
-        if(folder.getTitle()!=null) {this.title = folder.getTitle();}
-        if(folder.getParentCourse()!=null) {this.parentCourse = folder.getParentCourse();}
-        if(folder.getSubFolders()!=null) {this.subFolders = folder.getSubFolders();}
-        if(folder.getParentFolder()!=null) {this.parentFolder = folder.getParentFolder();}
-        if(folder.getFolderFiles()!=null) {this.folderFiles = folder.getFolderFiles();}
-        if(folder.getModerators()!=null) {this.moderators = folder.getModerators();}
+    public Folder(String title, String description, Folder folder) {
+        this.title = title;
+        this.description = description;
+        this.parentFolder = folder;
     }
 
     public List<User> getModerators() {
@@ -51,6 +59,10 @@ public class Folder extends Hib {
 
     public Folder(String title) {
         this.title = title;
+    }
+    public Folder(String title, String description) {
+        this.title = title;
+        this.description = description;
     }
 
     public String getTitle() {
@@ -85,12 +97,12 @@ public class Folder extends Hib {
         this.parentFolder = parentFolder;
     }
 
-    public List<File> getFolderFiles() {
-        return folderFiles;
+    public List<File> getFiles() {
+        return files;
     }
 
-    public void setFolderFiles(List<File> folderFiles) {
-        this.folderFiles = folderFiles;
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 
     public List<User> getEditors() {
@@ -99,5 +111,18 @@ public class Folder extends Hib {
 
     public void setEditors(List<User> moderators) {
         this.moderators = moderators;
+    }
+
+    @Override
+    public String toString(){
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

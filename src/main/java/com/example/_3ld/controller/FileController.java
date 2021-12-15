@@ -37,18 +37,18 @@ public class FileController {
         return "Success";
     }
 
-    @PutMapping(value="/{id}")
-    @ResponseBody
-    File update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
-        Optional<File> tempFile = fileRepository.findById(id);
-        File currentFile = tempFile.get();
-        JsonNode jsonNode = Json.parse(personData);
-
-        File file = Json.fromJson(jsonNode, File.class);
-        currentFile.update(file);
-        return fileRepository.save(currentFile);
-
-    }
+//    @PutMapping(value="/{id}")
+//    @ResponseBody
+//    File update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
+//        Optional<File> tempFile = fileRepository.findById(id);
+//        File currentFile = tempFile.get();
+//        JsonNode jsonNode = Json.parse(personData);
+//
+//        File file = Json.fromJson(jsonNode, File.class);
+//        currentFile.update(file);
+//        return fileRepository.save(currentFile);
+//
+//    }
     @PostMapping(value="/create")
     @ResponseBody
     File create(@RequestBody String personData) throws JsonProcessingException {

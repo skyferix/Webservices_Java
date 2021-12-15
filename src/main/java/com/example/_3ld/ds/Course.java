@@ -13,19 +13,16 @@ public class Course extends Hib {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public void update(Course course){
-        if(course.getTitle()!=null) {this.title = course.getTitle();}
-        if(course.getDescription()!=null) {this.description = course.getDescription();}
-        if(course.getCreatedDate()!=null) {this.createdDate = course.getCreatedDate();}
-        if(course.getStartDate()!=null) {this.startDate = course.getStartDate();}
-        if(course.getEndDate()!=null) {this.endDate = course.getEndDate();}
-    }
+    @ManyToOne
+    @JoinColumn(name="owner_id", referencedColumnName = "id")
+    private Person owner;
+
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name="course_moderator",
-            joinColumns = @JoinColumn(name="Course_id"),
-            inverseJoinColumns = @JoinColumn(name="Moderator_id")
+            joinColumns = @JoinColumn(name="Moderator_id"),
+            inverseJoinColumns = @JoinColumn(name="Course_id")
     )
     private List<User> courseModerators;
 
@@ -33,13 +30,9 @@ public class Course extends Hib {
     @OrderBy("id ASC")
     private List<Person> participants;
 
-    @OneToMany(mappedBy = "parentCourse",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @OrderBy("id ASC")
-    private List<Folder> courseFolders;
-
-    @ManyToOne
-    @JoinColumn(name="owner_id", referencedColumnName = "id")
-    private Person owner;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "main_folder_id", referencedColumnName = "id")
+    private Folder mainFolder;
 
     public Course(String title, String description, LocalDate createdDate, LocalDate startDate, LocalDate endDate) {
         this.title = title;
@@ -120,12 +113,12 @@ public class Course extends Hib {
         this.participants= participants;
     }
 
-    public List<Folder> getCourseFolders() {
-        return courseFolders;
+    public Folder getMainFolder() {
+        return mainFolder;
     }
 
-    public void setCourseFolders(List<Folder> courseFolders) {
-        this.courseFolders = courseFolders;
+    public void setMainFolder(Folder mainFolder) {
+        this.mainFolder = mainFolder;
     }
 
     public Person getOwner() {

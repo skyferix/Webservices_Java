@@ -20,13 +20,6 @@ public class Admin extends User{
         this.email = email;
     }
 
-    public void update(Admin admin){
-        if(admin.getLogin()!=null){this.setLogin(admin.getLogin());}
-        if(admin.getPassword()!=null){this.setPassword(admin.getPassword());}
-        if(admin.getName()!=null) {this.name = admin.getName();}
-        if(admin.getEmail()!=null) {this.email = admin.getEmail();}
-    }
-
     public String getName() {
         return name;
     }

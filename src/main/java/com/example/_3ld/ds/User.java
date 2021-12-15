@@ -8,9 +8,8 @@ import java.util.List;
 
 @Entity
 public abstract class User extends Hib {
-    @Column(unique = true, name="login")
+    @Column(unique = true)
     private String login;
-    @Column(name="password")
     private String password;
 
     @Enumerated(EnumType.ORDINAL)

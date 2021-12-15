@@ -1,23 +1,26 @@
 package com.example._3ld.ds;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class File extends Hib{
     private String name;
     private String path;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="folder_id", referencedColumnName = "id")
     private Folder folder;
 
-    public void update(File file){
-        if(file.getName()!=null) {this.name = file.getName();}
-        if(file.getPath()!=null) {this.path = file.getPath();}
-    }
-
     public File() {
     }
+
+    public File(String name, Folder folder) {
+        this.name = name;
+        this.folder = folder;
+    }
+
     public String getPath() {
         return path;
     }
@@ -48,5 +51,10 @@ public class File extends Hib{
 
     public void setFolder(Folder folder) {
         this.folder = folder;
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 }

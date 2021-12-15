@@ -106,33 +106,33 @@ public class UserController {
         return "Success";
     }
 
-    @PutMapping(value="/{id}")
-    @ResponseBody
-    User update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
-        Optional<User> tempUser = userRepository.findById(id);
-        User user = tempUser.get();
-        JsonNode jsonNode = Json.parse(personData);
-
-        if(user.getUserType() == UserType.Admin){
-            Person currentPerson = (Person) user;
-            Person person = Json.fromJson(jsonNode, Person.class);
-            currentPerson.update(person);
-            return personRepository.save(currentPerson);
-        }
-        else if(user.getUserType() == UserType.Person){
-            Admin currentAdmin = (Admin) user;
-            Admin admin = Json.fromJson(jsonNode, Admin.class);
-            currentAdmin.update(admin);
-            return adminRepository.save(currentAdmin);
-        }
-        else if(user.getUserType() == UserType.Company){
-            Company currentCompany = (Company) user;
-            Company company = Json.fromJson(jsonNode, Company.class);
-            currentCompany.update(company);
-            return companyRepository.save(currentCompany);
-        }
-        return null;
-    }
+//    @PutMapping(value="/{id}")
+//    @ResponseBody
+//    User update(@RequestBody String personData, @PathVariable Integer id) throws JsonProcessingException {
+//        Optional<User> tempUser = userRepository.findById(id);
+//        User user = tempUser.get();
+//        JsonNode jsonNode = Json.parse(personData);
+//
+//        if(user.getUserType() == UserType.Admin){
+//            Person currentPerson = (Person) user;
+//            Person person = Json.fromJson(jsonNode, Person.class);
+//            currentPerson.update(person);
+//            return personRepository.save(currentPerson);
+//        }
+//        else if(user.getUserType() == UserType.Person){
+//            Admin currentAdmin = (Admin) user;
+//            Admin admin = Json.fromJson(jsonNode, Admin.class);
+//            currentAdmin.update(admin);
+//            return adminRepository.save(currentAdmin);
+//        }
+//        else if(user.getUserType() == UserType.Company){
+//            Company currentCompany = (Company) user;
+//            Company company = Json.fromJson(jsonNode, Company.class);
+//            currentCompany.update(company);
+//            return companyRepository.save(currentCompany);
+//        }
+//        return null;
+//    }
 
     @PostMapping(value="/create")
     @ResponseBody
